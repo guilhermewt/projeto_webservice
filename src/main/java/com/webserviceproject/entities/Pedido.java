@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webserviceproject.entities.enums.StatusDePedido;
 
 @Entity
@@ -24,12 +27,16 @@ public class Pedido implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
-
+    
 	private Integer statusDePedido;
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "pedido",cascade = CascadeType.ALL)
+	private Payment payment;
 
 	public Pedido() {
 	}
@@ -38,6 +45,7 @@ public class Pedido implements Serializable {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setStatusDePedido(statusDePedido);
 		this.usuario = usuario;
 	}
 
@@ -73,6 +81,14 @@ public class Pedido implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	@Override

@@ -1,13 +1,18 @@
 package com.webserviceproject.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -22,6 +27,9 @@ public class Usuario implements Serializable{
 	private String email;
 	private String telefone;
 	private String senha;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Usuario() {
 	}
@@ -73,6 +81,11 @@ public class Usuario implements Serializable{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	@JsonIgnore
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
 	@Override

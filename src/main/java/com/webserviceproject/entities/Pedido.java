@@ -12,25 +12,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.webserviceproject.entities.enums.StatusDePedido;
+
 @Entity
 @Table(name = "tb_pedido")
-public class Pedido implements Serializable{
-	
+public class Pedido implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
-	
+
+	private Integer statusDePedido;
+
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
-	
+
 	public Pedido() {
 	}
 
-	public Pedido(Long id, Instant moment, Usuario usuario) {
+	public Pedido(Long id, Instant moment, StatusDePedido statusDePedido, Usuario usuario) {
 		super();
 		this.id = id;
 		this.moment = moment;
@@ -53,6 +57,16 @@ public class Pedido implements Serializable{
 		this.moment = moment;
 	}
 
+	public StatusDePedido getStatusDePedido() {
+		return StatusDePedido.valueOf(statusDePedido);
+	}
+
+	public void setStatusDePedido(StatusDePedido statusDePedido) {
+		if (statusDePedido != null) {
+			this.statusDePedido = statusDePedido.getCode();
+		}
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -60,7 +74,7 @@ public class Pedido implements Serializable{
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -77,5 +91,5 @@ public class Pedido implements Serializable{
 		Pedido other = (Pedido) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

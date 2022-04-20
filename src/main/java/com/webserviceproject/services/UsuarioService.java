@@ -17,4 +17,8 @@ public class UsuarioService {
 	public List<Usuario> findAll(){
 		return repositorio.findAll();
 	}
+	
+	public Usuario insert(Usuario obj) {
+		return repositorio.save(obj);
+	}
 }

@@ -64,5 +64,9 @@ public class ItemsDePedido implements Serializable{
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	public Double subTotal() {
+		return quantidade * price;
+	}
 
 }

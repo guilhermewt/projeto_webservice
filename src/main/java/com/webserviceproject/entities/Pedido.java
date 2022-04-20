@@ -100,6 +100,14 @@ public class Pedido implements Serializable {
 	public Set<ItemsDePedido> getItemsDePedido() {
 		return items;
 	}
+	
+	public Double getTotal() {
+		double sum = 0.0;
+		for(ItemsDePedido x : items) {
+			sum += x.subTotal();
+		}
+		return sum;
+	}
 
 	@Override
 	public int hashCode() {

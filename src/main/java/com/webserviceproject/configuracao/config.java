@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.webserviceproject.entities.Categoria;
+import com.webserviceproject.entities.ItemsDePedido;
 import com.webserviceproject.entities.Payment;
 import com.webserviceproject.entities.Pedido;
 import com.webserviceproject.entities.Produto;
@@ -16,6 +17,7 @@ import com.webserviceproject.entities.enums.StatusDePedido;
 import com.webserviceproject.repositorios.CategoriaRepositorio;
 import com.webserviceproject.repositorios.PedidoRepositorio;
 import com.webserviceproject.repositorios.ProdutoRepositorio;
+import com.webserviceproject.repositorios.RepositorioItemsDePedido;
 import com.webserviceproject.repositorios.UsuarioRepositorio;
 
 @Configuration
@@ -33,12 +35,16 @@ public class config implements CommandLineRunner{
 	@Autowired
 	private CategoriaRepositorio categoriaRepo;
 	
+	@Autowired
+	private RepositorioItemsDePedido repositorioItems;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
 		Usuario u1 = new Usuario(null, "gabriel", "gabriel@gmail", "339333", "12345");
 		Usuario u2 = new Usuario(null, "pedro", "pedro@gmail", "31233", "54321");
 		Usuario u3 = new Usuario(null, "alex", "alex@gmail", "32434", "43245");
+		
 		
 		repositorio.saveAll(Arrays.asList(u1,u2,u3));
 		
@@ -72,5 +78,13 @@ public class config implements CommandLineRunner{
 		
 		produtoRepo.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
+		ItemsDePedido items1 = new ItemsDePedido(pedido1, p1, 2, p1.getPrice());
+		ItemsDePedido items2 = new ItemsDePedido(pedido1, p3, 1, p3.getPrice());
+		ItemsDePedido items3 = new ItemsDePedido(pedido2, p3, 2, p3.getPrice());
+		ItemsDePedido items4 = new ItemsDePedido(pedido3, p5, 2, p5.getPrice());
+		
+		
+		repositorioItems.saveAll(Arrays.asList(items1,items2,items3,items4));
+				
 	}
 }
